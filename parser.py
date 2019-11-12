@@ -1,5 +1,9 @@
 import numpy as np
 
+
+def hello_world():
+    print("hello world")
+
 def parse_data_ng(path):
     """extracts csv data and cleans it up
     input data must be 2D (x and y)

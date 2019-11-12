@@ -1,7 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-
 def split_data(data):
     """splits a data matrix 60/20/20. accepts arbitrary dataset sizes m and n."""
     m = np.size(data, 0)
@@ -96,21 +95,43 @@ def add_bias(X):
     X_bias = np.hstack([ones, X])
     return X_bias
 
+def sigmoid(x):
+    """returns sigmoid of single value, or piece-wise sigmoid of matrix"""
+    return (1/(1+np.exp(-x)))
+
+def calc_hypo(X, theta):
+    """X is an m*n matrix with bias added already"""
+    hypo = np.matmul(X, theta)
+    return hypo
+
 def calc_cost(X, y, theta, reg_const):
     """Calculates cost across all m examples of a dataset"""
     m = np.size(X,0)
-    hypo = np.matmul(X, theta) # (m*n)*(n*1) = m*1
-    err = hypo - y
-    sqr_err = np.power(err, 2)
-    sum_sqr_err = np.sum(sqr_err)
+    hypo = calc_hypo(X, theta) # (m*n)*(n*1) = m*1
+    sum_me = y*np.log(hypo) + (1-y)*np.log(1-hypo)
+    J_nonreg = (-1/m) * np.sum(sum_me)
 
     temp_theta = np.copy(theta)
     temp_theta[0] = 0
     temp_theta = temp_theta**2
-    reg_term = reg_const*np.sum(temp_theta)
+    reg_term = (1/(2*m))*reg_const*np.sum(temp_theta)
 
-    cost = (sum_sqr_err + reg_term)/(2*m)
+    cost = J_nonreg + reg_term
     return cost
+
+   # m = np.size(X,0)
+   # hypo = np.matmul(X, theta) # (m*n)*(n*1) = m*1
+   # err = hypo - y
+   # sqr_err = np.power(err, 2)
+   # sum_sqr_err = np.sum(sqr_err)
+
+   # temp_theta = np.copy(theta)
+   # temp_theta[0] = 0
+   # temp_theta = temp_theta**2
+   # reg_term = reg_const*np.sum(temp_theta)
+
+   # cost = (sum_sqr_err + reg_term)/(2*m)
+   # return cost
 
 def calc_grad(X, y, theta, reg_const):
     """Calculates cost across all m examples of a dataset"""
@@ -152,11 +173,13 @@ def map_scatter(list_x, list_y, nlist):
     return x, y, z
 
 
-def calc_hypo(x_plotvec, theta_opt):
-    X = mod_degree(x_plotvec, np.size(theta_opt, 0) - 1)
-    X = normalize(X)
-    X = add_bias(X)
-    y = np.matmul(X, theta_opt)
-    return y
+#def calc_hypo(x_plotvec, theta_opt):
+#    """given raw x 1d vector, mod the degree to be consistent with the
+#    theta_opt vector, normalize, add bias, then predict."""
+#    X = mod_degree(x_plotvec, np.size(theta_opt, 0) - 1)
+#    X = normalize(X)
+#    X = add_bias(X)
+#    y = np.matmul(X, theta_opt)
+#    return y
 
 

@@ -2,6 +2,7 @@ from general import *
 from parser import *
 from theta_optimizer import *
 
+hello_world()
 X, y = parse_data_ng('ex2data1.txt')
 
 
