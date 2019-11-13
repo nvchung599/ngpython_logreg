@@ -1,1 +1,1 @@
-from parser import *
+from data_parser import *

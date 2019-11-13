@@ -1,5 +1,5 @@
 from general import *
-from parser import *
+from data_parser import *
 
 X, y = parse_data_ng('ex2data1.txt')
 

@@ -36,6 +36,22 @@ class ThetaOptimizer(object):
         plt.plot(self.J_history)
         plt.show()
 
+    def plot_dec_bound(self, X, theta, threshold):
+        """X is the raw data set, sampled to find min/max values
+        theta should be optimized already
+        threshold is typically set at 0.5"""
+        x1_min = np.min(X[:,0])
+        x1_max = np.max(X[:,0])
+        x2_min = np.min(X[:,1])
+        x2_max = np.max(X[:,1])
+
+        x1_sparse = np.arange(x1_min, x1_max, 1000)
+        x2_sparse = np.arange(x2_min, x2_max, 1000)
+        x1_sparse = x1_sparse.reshape(-1,1)
+        x2_sparse = x2_sparse.reshape(-1,1)
+        X_sparse = np.hstack([x1_sparse, x2_sparse])
+        print(X)
+
     def check_my_gradients(self, X, y, reg_const, epsilon):
         theta = construct_theta(X)
         grad_check(X, y, theta, epsilon, reg_const)

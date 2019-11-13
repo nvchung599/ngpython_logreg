@@ -101,7 +101,8 @@ def sigmoid(x):
 
 def calc_hypo(X, theta):
     """X is an m*n matrix with bias added already"""
-    hypo = np.matmul(X, theta)
+    poly = np.matmul(X, theta)
+    hypo = sigmoid(poly)
     return hypo
 
 def calc_cost(X, y, theta, reg_const):
